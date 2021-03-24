@@ -2,6 +2,7 @@
 
 - [Introduction](#Introduction)
 - [API sample](#API)
+- [Technologies](#Technologies)
 - [Deployment](#Deployment)
 - [Pipeline](#Pipeline)
 - [Installation](#Installation)
@@ -32,6 +33,16 @@ book's title, author, publication year, ISBN number, review count, and average s
 }
 ```
 
+# Technologies
+
+- [Flask](#https://flask.palletsprojects.com/en/1.1.x/)
+- PostgreSQL
+- Docker
+- Kubernetes
+- [CircleCI](#https://circleci.com/)
+- Ansible
+- AWS CloudFormation
+
 # Deployment
 
 The app is deployed to a self-hosted kubernetes cluster on AWS EC2, which is provisioned using ansible and AWS CloudFormation. All source files are found in the [deploy](deploy) dir.
@@ -57,11 +68,13 @@ export GOODREADS_API_KEY=<key-her>
 
 ## Using rancher's k3d
 
-Make sure that k3d and docker is installed, then simply run the bootstrap script:
+Make sure that [k3d](https://k3d.io/) and docker is installed, then simply run the bootstrap script:
 
 ```bash
 $ ./deploy/kube/bootstrap
 ```
+
+Once the website pod is up and running, navigate to [http://localhost:8000](http://localhost:8000).
 
 ## Using docker
 
