@@ -87,6 +87,9 @@ workflows:
           docker-password: DOCKER_PASSWORD
           requires: ["lint"]
       
-      - deploy-infrastructure
+      - deploy-infrastructure:
+          filters:
+            branches:
+              only: [main]
       - provision-cluster:
           requires: ["deploy-infrastructure"]
