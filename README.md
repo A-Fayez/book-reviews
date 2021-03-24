@@ -6,7 +6,7 @@
 - [Pipeline](#Pipeline)
 - [Installation](#Installation)
 
-# Intrudction
+# Introdction
 
 [Demo Video](https://youtu.be/F-TqHESV-i4).
 
