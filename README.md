@@ -1,12 +1,12 @@
 # Table of Contents
 
-- [Introudction](#Introduction)
+- [Introduction](#Introduction)
 - [API sample](#API)
 - [Deployment](#Deployment)
 - [Pipeline](#Pipeline)
 - [Installation](#Installation)
 
-# Introdction
+# Introduction
 
 [Demo Video](https://youtu.be/F-TqHESV-i4).
 
