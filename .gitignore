@@ -1,0 +1,12 @@
+instance/*
+!instance/.gitignore
+.webassets-cache
+__pycache__/*
+flask_session/*
+.vscode/*
+!.vscode/settings.json
+.env
+*.csv
+
+# is this an .env?
+deploy/kube/configmap.yml

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+: "${CLUSTER_NAME:=reviews-cluster}"
+
+k3d cluster delete "$CLUSTER_NAME"

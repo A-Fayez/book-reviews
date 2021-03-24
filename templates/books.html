@@ -1,0 +1,27 @@
+{% extends "layout.html" %} {% block title %} Books {% endblock %} {% include
+"navigation.html" %} {% block body %}
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Author</th>
+      <th scope="col">ISBN</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+    <tr>
+      <td>
+        <!-- Title-->
+        <a href="{{ url_for('book', isbn=book.isbn) }}" id="book-info">
+          {{ book.title }}
+        </a>
+      </td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.isbn }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+version: 2.1
+
+orbs:
+  docker: circleci/docker@1.5.0
+
+jobs:
+  lint:
+    docker:
+      - image: circleci/python:3.9.1-buster
+    environment:
+      container: book-reviews
+    steps:
+      - checkout
+
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m pip install flake8
+            sudo apt update
+            sudo apt install -y wget
+            wget -O hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64
+            chmod +x hadolint
+
+      - run: 
+          name: lint
+          command: |
+            flake8 .
+            ./hadolint Dockerfile
+
+  deploy-infrastructure:
+    docker: 
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run: yum -y install tar gzip
+      - run: 
+          name: create EC2 node to host the cluster
+          command: |
+            aws cloudformation deploy \
+              --template-file deploy/cloudformation/ec2.yml \
+              --stack-name k3d-node-"${CIRCLE_WORKFLOW_ID}" \
+              --parameter-override ID="${CIRCLE_WORKFLOW_ID}"
+            
+            # get the newly created hostname 
+            EC2_HOST=$(aws cloudformation describe-stacks \
+                   --stack-name k3d-node-"${CIRCLE_WORKFLOW_ID}" \
+                   --query "Stacks[0].Outputs[?OutputKey=='EC2Hostname'].OutputValue" \
+                   --no-paginate --output text)
+            
+            echo $EC2_HOST >> deploy/ansible/inventory.txt
+
+      - persist_to_workspace:
+          root: deploy/ansible
+          paths:
+            - inventory.txt
+
+
+  provision-cluster:
+    docker:
+      - image: circleci/python:3.9.1-buster
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "0c:1c:3f:7d:d4:5f:7d:cd:6a:d7:02:b8:12:72:36:ca"
+      - attach_workspace:
+          at: /tmp/deploy/ansible
+      
+      - run:
+          name: install ansible
+          command: python3 -m pip install --user ansible openshift pyyaml
+          
+      - run:
+          name: provision the cluster
+          command: |
+            cd deploy/ansible
+            ansible-galaxy install -r requirements.yml
+            ansible-playbook -i /tmp/deploy/ansible/inventory.txt k3d-node-playbook.yml
+
+workflows:
+  default:
+    jobs:
+      - lint
+      - docker/publish:
+          image: $DOCKER_USERNAME/$CIRCLE_PROJECT_REPONAME
+          docker-username: DOCKER_USERNAME
+          docker-password: DOCKER_PASSWORD
+          requires: ["lint"]
+      
+      - deploy-infrastructure
+      - provision-cluster:
+          requires: ["deploy-infrastructure"]

@@ -1,0 +1,157 @@
+d.container:not(table) {
+  margin: 50px auto;
+  width: 100%;
+}
+
+.form {
+  position: relative;
+  margin: 0 auto;
+  padding: 20px 20px 20px;
+  width: 310px;
+}
+
+h1 {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+  left: 370px;
+}
+
+p {
+  position: relative;
+  font-size: large;
+  margin: 10px;
+  margin-bottom: 30px;
+  left: 335px;
+}
+
+.form:before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  left: -8px;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}
+
+.form h2,
+.search-form h2 {
+  position: relative;
+  margin-left: 90px;
+  margin-bottom: 20px;
+}
+
+button {
+  position: relative;
+  width: 120px;
+  height: 40px;
+  left: 75px;
+  margin: 0 auto;
+}
+
+.err-container {
+  position: relative;
+  top: 60px;
+}
+
+.err-btn {
+  position: relative;
+  width: 300px;
+  left: 400px;
+}
+
+.form input[type="text"],
+.form input[type="password"] {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 5px #000000;
+}
+
+.search-form {
+  position: relative;
+  margin: 0 auto;
+  padding: 40px 40px 40px;
+  width: 500px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}
+
+#book-info {
+  font-size: 20px;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid black;
+  margin: 0 auto;
+}
+
+td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid black;
+}
+
+th {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid black;
+  font-size: x-large;
+  background-color: rgb(0, 211, 200);
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #e9f8ff;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #b4e4f3;
+}
+
+.review {
+  position: relative;
+  width: 50%;
+}
+
+#book-info {
+  position: relative;
+  left: -15px;
+}
+
+#rev-btn {
+  position: relative;
+  left: 20%;
+}
+
+/* navigation bar */
+.nav-bar ul {
+  list-style-type: none;
+  margin-bottom: 50px;
+  padding: 0;
+  overflow: hidden;
+  background-color: #007bff;
+}
+
+.nav-bar li {
+  float: left;
+  font-size: x-large;
+  margin: 0 20px;
+}
+
+.nav-bar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.nav-bar li a:hover {
+  background-color: blue;
+}

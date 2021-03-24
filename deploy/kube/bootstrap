@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -uo pipefail
+trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+IFS=$'\n\t'
+
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+
+: "${INGRESS_HTTP_PORT:=80}"
+: "${CLUSTER_NAME:=reviews-cluster}"
+
+k3d cluster create \
+    -p "${INGRESS_HTTP_PORT}:80@loadbalancer" \
+    --agents 2 \
+    "${CLUSTER_NAME}"
+
+cat <<EOF >"${SCRIPT_DIR}/configmap.yml"
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: reviews-config-map
+  namespace: default
+data:
+  GOODREADS_API_KEY: "${GOODREADS_API_KEY}"
+  DATABASE_URL: "${DATABASE_URL}"
+EOF
+
+kubectl create -f "${SCRIPT_DIR}/configmap.yml"
+kubectl apply -f "${SCRIPT_DIR}/reviews.yml"
+

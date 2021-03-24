@@ -1,0 +1,53 @@
+{% extends "layout.html" %} {% block title %} Books {% endblock %} {% block body
+%}
+
+<h1>Welcome to Books</h1>
+<p><b>Review and display info about your favourite books</b></p>
+
+{% if alert == '' %}
+<div class="alert alert-danger" role="alert">
+  Please Log in first
+</div>
+{% endif %}
+
+<div class="form">
+  <form action=" {{ url_for('login') }} " method="post">
+    <h2>Login</h2>
+
+    <div class="form-group">
+      <input
+        class="form-control"
+        type="text"
+        name="username"
+        placeholder="username"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <input
+        class="form-control"
+        type="password"
+        name="password"
+        placeholder="password"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-primary" id="log-btn">Login</button>
+    </div>
+
+    <div>
+      <button
+        class="btn btn-primary"
+        id="reg-btn"
+        onclick="window.location.href='{{ url_for('register') }}';"
+      >
+        Register
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+.git
+flask_session/*
+__pycache__
+.vscode
+deploy
+.circleci

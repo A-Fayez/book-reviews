@@ -1,0 +1,37 @@
+---
+- name: "provision k3d node"
+  hosts: k3d-node
+  become: true
+  user: ubuntu
+  gather_facts: true
+  vars:
+    - ansible_python_interpreter: /usr/bin/python3
+    - ansible_host_key_checking: false
+    - ansible_stdout_callback: yaml
+
+    - docker_install_compose: false
+    - docker_service_state: started
+    - docker_service_enabled: true
+    - docker_restart_handler_state: restarted
+    - docker_package_state: present
+
+
+    - docker_users:
+        - ubuntu
+  
+  environment:
+    DATABASE_URL: "{{ lookup('env', 'DATABASE_URL') }}"
+    GOODREADS_API_KEY: "{{ lookup('env', 'GOODREADS_API_KEY') }}"
+
+  
+  pre_tasks:
+    - name: "updating repo cache"
+      become: yes
+      apt:
+        update_cache: yes
+
+  roles:
+    - geerlingguy.docker
+    - githubixx.kubectl
+    - andrewrothstein.k3d
+    - provision-cluster

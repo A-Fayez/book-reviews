@@ -1,0 +1,26 @@
+{% extends "layout.html" %} {% block title %} Success! {% endblock %} {% include
+"navigation.html" %} {% block body %} {% if type == "REVIEW" %}
+<div class="err-container">
+  <div class="alert alert-success text-center" role="alert">
+    You have successfully submitted your review.
+  </div>
+  <button
+    class="btn btn-primary err-btn"
+    onclick="window.location.href='{{ url_for('search_view') }}';"
+  >
+    Back to search page
+  </button>
+</div>
+{% endif %} {% if type == "REGISTER" %}
+<div class="err-container">
+  <div class="alert alert-success col-sm-4 justify-content-center" role="alert">
+    You've registered successfully, Now you can
+    <button
+      class="btn btn primary err-btn"
+      onclick="window.location.href='{{ url_for('index') }}';"
+    >
+      Log In
+    </button>
+  </div>
+</div>
+{% endif %} {% endblock %}

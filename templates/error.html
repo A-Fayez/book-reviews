@@ -1,0 +1,43 @@
+{% extends "layout.html" %} {% block title %} Error! {% endblock %} {% include
+"navigation.html" %} {% block body %} {% if type == "REVIEW" %}
+
+<div class="err-container">
+  <div class="alert alert-danger text-center" role="alert">
+    You have already reviewed that book.
+  </div>
+  <button
+    class="btn btn-primary err-btn"
+    onclick="window.location.href='{{ url_for('search_view') }}';"
+  >
+    Back to search page
+  </button>
+</div>
+
+{% else %}
+<div class="err-container">
+  <div class="alert alert-danger text-center" role="alert">
+    {{ message }}
+  </div>
+
+  <button
+    class="btn btn primary err-btn"
+    onclick="window.location.href='{{ url_for('index') }}';"
+  >
+    Log In
+  </button>
+
+  <button
+    class="btn btn primary err-btn"
+    onclick="window.location.href='{{ url_for('register') }}';"
+  >
+    Register
+  </button>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".nav-bar").hidden = true;
+  });
+</script>
+
+{% endif %} {% endblock %}

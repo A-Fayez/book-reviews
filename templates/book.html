@@ -1,0 +1,54 @@
+{% extends "layout.html" %} {% block title %} {{ book.title }} {% endblock %} {%
+include "navigation.html" %} {% block body %}
+<h1><b> {{ book.title }}</b></h1>
+
+<div id="book-info">
+  <ul>
+    <li><b>Title: </b> {{ book.title }}</li>
+    <li><b>Author: </b> {{ book.author }}</li>
+    <li><b>Publication Year: </b> {{ book.year }}</li>
+    <li><b>isbn: </b> {{ book.isbn }}</li>
+    <li><b>Average rating: </b> {{ avg_rating }}</li>
+    <li><b>Number of ratings: </b> {{ ratings_count }}</li>
+  </ul>
+</div>
+<form action=" {{ url_for('book_review', isbn=book.isbn) }}" method="post">
+  <div class="review form-group">
+    <label><b>Submit your review of the book</b></label>
+    <select class="form-control" name="rating">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      
+    </select>
+  </div>
+
+  <div class="form-group review">
+    <label><b>Tell us what do you think about {{ book.title }}</b></label>
+    <textarea class="form-control" rows="3" name="opinion"></textarea>
+  </div>
+
+  <div
+    class="form-group"
+    id="rev-btn"
+    style="display: inline-block; position: relative; left: 130px;"
+  >
+    <button class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', () => {
+      const reviewed = "{{ reviewed }}";
+      if ( reviewed === "True") {
+          document.querySelector("select").selectedIndex = {{ rate }} -1;
+          document.querySelector("textarea").innerHTML = "{{ opinion }}";
+      }
+
+  });
+</script>
+
+{% endblock %}
